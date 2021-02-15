@@ -16,5 +16,6 @@ import static art.aukhatov.retry.Retry.retry;
         .handle(ConnectionException.class)
         .run(()->{
             // do someting retryable
+            // it can throw the ConnectionException
         });
 ```
