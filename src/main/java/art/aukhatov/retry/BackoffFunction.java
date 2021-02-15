@@ -21,6 +21,7 @@ public interface BackoffFunction {
 
     class Exponential implements BackoffFunction {
 
+        private static final int DEFAULT_FACTOR = 3;
         private final int factor;
 
         public Exponential(int factor) {
@@ -28,6 +29,10 @@ public interface BackoffFunction {
                 throw new IllegalArgumentException("Factor must be greater than 1");
 
             this.factor = factor;
+        }
+
+        public Exponential() {
+            this.factor = DEFAULT_FACTOR;
         }
 
         @Override
