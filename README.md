@@ -1,6 +1,6 @@
 # retry
 
-This is simple retry library
+This is a simple and lightweight retry library for Java.
 
 ## Code Examples
 
