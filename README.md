@@ -25,7 +25,7 @@ import static art.aukhatov.retry.Retry.retry;
 
 ### Fixed Backoff Function
 
-This is **fixed** backoff algorithm implementation.
+This is a **fixed** backoff algorithm implementation.
 There **each attempt of the operation** will be retried by **the same timeout** if the exception _(or any)_ occurred.
 
 ```java
@@ -43,7 +43,7 @@ import static art.aukhatov.retry.Retry.retry;
 
 ### Randomized Backoff Function
 
-This is **randomized** backoff algorithm implementation.
+This is a **randomized** backoff algorithm implementation.
 
 ```java
 import static art.aukhatov.retry.Retry.retry;
