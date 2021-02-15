@@ -2,6 +2,15 @@
 
 This is a simple and lightweight retry library for Java.
 
+## Motivation
+I answer one of the most popular questions: **Why?!**
+
+The short answer is - I'm a programmer and I can!
+
+To be serious I had to solve an issue on my work project. Where some actions must be retried if an error occurred according to specific responses.
+First, to solve this issue I looked up open-source libraries which may help me. I found two popular libs: resilience4j, Failsafe.
+But they do more than retry and I must prove that these libraries are reliable, robust, etc.
+
 ## Code Examples
 
 ### Exponential Backoff
