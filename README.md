@@ -4,7 +4,7 @@ This is a simple and lightweight retry library for Java.
 
 ## Code Examples
 
-### Exponential Backoff Function
+### Exponential Backoff
 
 The **exponential** backoff algorithm implementation.
 It uses to **gradually reduce the rate** of the operation if the exception _(or any)_ occurred.
@@ -23,7 +23,7 @@ import static art.aukhatov.retry.Retry.retry;
         });
 ```
 
-### Fixed Backoff Function
+### Fixed Backoff
 
 This is a **fixed** backoff algorithm implementation.
 There **each attempt of the operation** will be retried by **the same timeout** if the exception _(or any)_ occurred.
@@ -41,7 +41,7 @@ import static art.aukhatov.retry.Retry.retry;
         });
 ```
 
-### Randomized Backoff Function
+### Randomized Backoff
 
 This is a **randomized** backoff algorithm implementation.
 
