@@ -69,7 +69,7 @@ public final class Retry {
         return this;
     }
 
-    public void run(RetryRunnable retry) throws RetryInterruptedException {
+    public void run(RunnableRetry retry) throws RetryInterruptedException {
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 retry.run();
@@ -120,7 +120,7 @@ public final class Retry {
         }
     }
 
-    public <R> Optional<R> call(RetryCallable<R> retry) throws RetryInterruptedException {
+    public <R> Optional<R> call(CallableRetry<R> retry) throws RetryInterruptedException {
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 return Optional.of(retry.call());

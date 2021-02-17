@@ -1,6 +1,6 @@
 package art.aukhatov.retry;
 
-public interface RetryCallable<V> {
+public interface CallableRetry<V> {
 
     V call();
 }

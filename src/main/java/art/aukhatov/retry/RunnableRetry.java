@@ -1,6 +1,6 @@
 package art.aukhatov.retry;
 
-public interface RetryRunnable {
+public interface RunnableRetry {
 
     void run() throws Exception;
 }
