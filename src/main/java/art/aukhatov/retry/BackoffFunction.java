@@ -25,8 +25,9 @@ public interface BackoffFunction {
         private final int factor;
 
         public Exponential(int factor) {
-            if (factor < 1)
+            if (factor < 1) {
                 throw new IllegalArgumentException("Factor must be greater than 1");
+            }
 
             this.factor = factor;
         }
@@ -49,8 +50,9 @@ public interface BackoffFunction {
         private final SecureRandom generator;
 
         public Randomized(int bound) {
-            if (bound < 1)
+            if (bound < 1) {
                 throw new IllegalArgumentException("Factor must be greater than 1");
+            }
 
             this.bound = bound;
             this.generator = new SecureRandom();
