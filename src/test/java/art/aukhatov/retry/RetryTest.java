@@ -1,10 +1,10 @@
 package art.aukhatov.retry;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
-
 import java.time.Duration;
 import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import static art.aukhatov.retry.Retry.retry;
 import static org.junit.jupiter.api.Assertions.assertEquals;

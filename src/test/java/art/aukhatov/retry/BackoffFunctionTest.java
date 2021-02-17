@@ -1,8 +1,8 @@
 package art.aukhatov.retry;
 
-import org.junit.jupiter.api.Test;
-
 import java.time.Duration;
+
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
