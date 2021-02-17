@@ -90,8 +90,8 @@ public final class Retry {
         }
     }
 
-    private boolean isAllowedRetry(int attempt, Throwable e) {
-        return (failureConditions.isEmpty() || failureConditions.contains(e.getClass())) && attempt < maxAttempts;
+    private boolean isAllowedRetry(int attempt, Throwable ex) {
+        return (failureConditions.isEmpty() || failureConditions.contains(ex.getClass())) && attempt < maxAttempts;
     }
 
     private Duration backoffDelay(int attempt) {
