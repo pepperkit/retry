@@ -54,13 +54,11 @@ public final class Retry {
         return this;
     }
 
-    @SafeVarargs
     public Retry handle(Class<? extends Throwable>... failure) {
         Collections.addAll(failureConditions, failure);
         return this;
     }
 
-    @SafeVarargs
     public Retry abortIf(Class<? extends Throwable>... failure) {
         Collections.addAll(abortConditions, failure);
         return this;
@@ -106,10 +104,11 @@ public final class Retry {
     }
 
     private Duration min(Duration duration1, Duration duration2) {
-        if (duration1.compareTo(duration2) < 0)
+        if (duration1.compareTo(duration2) < 0) {
             return duration1;
-        else
+        } else {
             return duration2;
+        }
     }
 
     private void sleep(Duration timeout) {
