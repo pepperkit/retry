@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'checkstyle'
 }
 
 group 'art.aukhatov.retry'
@@ -16,4 +17,9 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+checkstyle {
+    config project.resources.text
+            .fromUri(new URI("https://raw.githubusercontent.com/aukhatov/checkstyle/master/checkstyle.xml"))
 }
