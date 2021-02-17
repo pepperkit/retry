@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public final class Retry {
 
@@ -40,39 +39,39 @@ public final class Retry {
         return new Retry(maxAttempts);
     }
 
-    public final Retry backoff(BackoffFunction backoffFunc) {
+    public Retry backoff(BackoffFunction backoffFunc) {
         this.backoffFunc = backoffFunc;
         return this;
     }
 
-    public final Retry delay(Duration delay) {
+    public Retry delay(Duration delay) {
         this.delay = delay;
         return this;
     }
 
-    public final Retry maxDelay(Duration maxDelay) {
+    public Retry maxDelay(Duration maxDelay) {
         this.maxDelay = maxDelay;
         return this;
     }
 
     @SafeVarargs
-    public final Retry handle(Class<? extends Throwable>... failure) {
+    public Retry handle(Class<? extends Throwable>... failure) {
         Collections.addAll(failureConditions, failure);
         return this;
     }
 
     @SafeVarargs
-    public final Retry abortIf(Class<? extends Throwable>... failure) {
+    public Retry abortIf(Class<? extends Throwable>... failure) {
         Collections.addAll(abortConditions, failure);
         return this;
     }
 
-    public final Retry onFailure(Consumer<? super Throwable> fn) {
+    public Retry onFailure(Consumer<? super Throwable> fn) {
         failureConsumers.add(fn);
         return this;
     }
 
-    public final void run(RetryRunnable retry) throws RetryInterruptedException {
+    public void run(RetryRunnable retry) throws RetryInterruptedException {
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 retry.run();
@@ -122,7 +121,7 @@ public final class Retry {
         }
     }
 
-    public final <R> Optional<R> call(RetryCallable<R> retry) throws RetryInterruptedException {
+    public <R> Optional<R> call(RetryCallable<R> retry) throws RetryInterruptedException {
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 return Optional.of(retry.call());
