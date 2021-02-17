@@ -1,10 +1,7 @@
 package art.aukhatov.retry;
 
-import java.io.Serial;
-
 public class RetryInterruptedException extends RuntimeException {
 
-    @Serial
     private static final long serialVersionUID = 5443040601324416580L;
 
     public RetryInterruptedException() {
