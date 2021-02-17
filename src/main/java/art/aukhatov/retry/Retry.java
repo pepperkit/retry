@@ -31,44 +31,82 @@ public final class Retry {
         this.delay = DEFAULT_DELAY;
     }
 
+    /**
+     * Default fabric method with 3 attempts.
+     */
     public static Retry retry() {
         return new Retry(DEFAULT_MAX_ATTEMPTS);
     }
 
+    /**
+     * Specifies how many attempts an action will be retried.
+     *
+     * @param maxAttempts number of attempts
+     * @return this instance
+     */
     public static Retry retry(int maxAttempts) {
         return new Retry(maxAttempts);
     }
 
+    /**
+     * Specifies the backoff function before call next attempt.
+     */
     public Retry backoff(BackoffFunction backoffFunc) {
         this.backoffFunc = backoffFunc;
         return this;
     }
 
+    /**
+     * Specifies an initial timeout {@link Duration} that uses in {@link BackoffFunction} before call next attempt.
+     */
     public Retry delay(Duration delay) {
         this.delay = delay;
         return this;
     }
 
+    /**
+     * Specifies max timeout value.
+     * If the value is set, a backoff function can't exceed it.
+     */
     public Retry maxDelay(Duration maxDelay) {
         this.maxDelay = maxDelay;
         return this;
     }
 
+    /**
+     * Specifies the failures to handle.
+     * Any failures that are assignable from the {@code failures} will be handled.
+     */
     public Retry handle(Class<? extends Throwable>... failure) {
         Collections.addAll(failureConditions, failure);
         return this;
     }
 
+    /**
+     * Specifies that retries have to be aborted.
+     * Any failures that are assignable from the {@code failures} will be aborted.
+     */
     public Retry abortIf(Class<? extends Throwable>... failure) {
         Collections.addAll(abortConditions, failure);
         return this;
     }
 
+    /**
+     * Registers the handler to be called when an execution attempt fails.
+     *
+     * @param fn the handler
+     */
     public Retry onFailure(Consumer<? super Throwable> fn) {
         failureConsumers.add(fn);
         return this;
     }
 
+    /**
+     * The method performs an action that can retry it when specified exceptions occurred.
+     *
+     * @param retry the operation with retry
+     * @throws RetryInterruptedException when something went wrong during delay
+     */
     public void run(RunnableRetry retry) throws RetryInterruptedException {
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
@@ -88,6 +126,34 @@ public final class Retry {
                 }
             }
         }
+    }
+
+    /**
+     * The method computes a result that can retry it when specified exceptions occurred.
+     *
+     * @param retry the operation with retry
+     * @param <R>   the result type
+     * @return a result of the operation
+     * @throws RetryInterruptedException when something went wrong during delay
+     */
+    public <R> Optional<R> call(CallableRetry<R> retry) throws RetryInterruptedException {
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                return Optional.of(retry.call());
+            } catch (Throwable ex) {
+                if (abortConditions.contains(ex.getClass())) {
+                    break;
+                }
+
+                failureConsumers.forEach(f -> f.accept(ex));
+
+                if (isAllowedRetry(attempt, ex)) {
+                    Duration delayMillis = backoffDelay(attempt);
+                    sleep(delayMillis);
+                }
+            }
+        }
+        return Optional.empty();
     }
 
     private boolean isAllowedRetry(int attempt, Throwable ex) {
@@ -118,23 +184,5 @@ public final class Retry {
             Thread.currentThread().interrupt();
             throw new RetryInterruptedException(e);
         }
-    }
-
-    public <R> Optional<R> call(CallableRetry<R> retry) throws RetryInterruptedException {
-        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
-            try {
-                return Optional.of(retry.call());
-            } catch (Throwable ex) {
-                if (abortConditions.contains(ex.getClass())) {
-                    break;
-                }
-
-                if (isAllowedRetry(attempt, ex)) {
-                    Duration delayMillis = backoffDelay(attempt);
-                    sleep(delayMillis);
-                }
-            }
-        }
-        return Optional.empty();
     }
 }
