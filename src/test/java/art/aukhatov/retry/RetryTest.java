@@ -29,12 +29,12 @@ class RetryTest {
     }
 
     @Test
-    void abortWhen() {
+    void exponentialWhenResultIsSuccess() {
         Optional<String> result = retry(1)
-                .backoff(new BackoffFunction.Fixed())
+                .backoff(new BackoffFunction.Exponential(3))
                 .delay(Duration.ofSeconds(2))
-                .call(() -> "ABORT", r -> r.equals("ABORT"));
+                .call(() -> "RESULT");
 
-        assertEquals(Optional.of("ABORT"), result);
+        assertEquals(Optional.of("RESULT"), result);
     }
 }

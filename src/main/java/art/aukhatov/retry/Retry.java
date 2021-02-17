@@ -139,30 +139,4 @@ public final class Retry {
         }
         return Optional.empty();
     }
-
-    public final <R> Optional<R> call(RetryCallable<R> retry, Predicate<? super R> abortWhen)
-            throws RetryInterruptedException {
-
-        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
-            try {
-                R result = retry.call();
-
-                if (Objects.nonNull(abortWhen) && abortWhen.test(result)) {
-                    return Optional.of(result);
-                }
-
-                return Optional.of(result);
-            } catch (Throwable ex) {
-                if (abortConditions.contains(ex.getClass())) {
-                    break;
-                }
-
-                if (isAllowedRetry(attempt, ex)) {
-                    Duration delayMillis = backoffDelay(attempt);
-                    sleep(delayMillis);
-                }
-            }
-        }
-        return Optional.empty();
-    }
 }
