@@ -1,5 +1,7 @@
 # retry
 
+![Build Status](https://github.com/aukhatov/retry/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=master)
+
 This is a simple and lightweight retry library for Java.
 
 ## Motivation
