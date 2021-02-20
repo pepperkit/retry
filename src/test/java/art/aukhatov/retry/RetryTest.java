@@ -2,6 +2,7 @@ package art.aukhatov.retry;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -14,6 +15,8 @@ class RetryTest {
     @Test
     @Timeout(6)
     void fixedRetry() {
+
+        AtomicInteger counter = new AtomicInteger();
         retry(3)
                 .backoff(new BackoffFunction.Fixed())
                 .delay(Duration.ofSeconds(2))
@@ -24,8 +27,11 @@ class RetryTest {
                     }
                 })
                 .run(() -> {
+                    counter.incrementAndGet();
                     throw new IllegalArgumentException("Just to test");
                 });
+
+        assertEquals(3, counter.get());
     }
 
     @Test
