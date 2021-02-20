@@ -112,7 +112,7 @@ public final class Retry {
             try {
                 retry.run();
                 return;
-            } catch (final Throwable ex) {
+            } catch (final Exception ex) {
 
                 if (abortConditions.contains(ex.getClass())) {
                     break;
@@ -140,7 +140,7 @@ public final class Retry {
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
             try {
                 return Optional.of(retry.call());
-            } catch (Throwable ex) {
+            } catch (Exception ex) {
                 if (abortConditions.contains(ex.getClass())) {
                     break;
                 }
