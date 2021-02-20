@@ -5,6 +5,7 @@ import java.time.Duration;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BackoffFunctionTest {
 
@@ -42,7 +43,12 @@ class BackoffFunctionTest {
         BackoffFunction.Randomized function = new BackoffFunction.Randomized(5);
 
         Duration delay1 = function.delay(1, initialDelay);
+        assertTrue(delay1.toMillis() > 100L);
+
         Duration delay2 = function.delay(2, initialDelay);
+        assertTrue(delay2.toMillis() > 100L);
+
         Duration delay3 = function.delay(3, initialDelay);
+        assertTrue(delay3.toMillis() > 100L);
     }
 }
