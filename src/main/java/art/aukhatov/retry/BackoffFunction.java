@@ -11,6 +11,7 @@ public interface BackoffFunction {
     class Fixed implements BackoffFunction {
 
         public Fixed() {
+            // default implementation
         }
 
         @Override
