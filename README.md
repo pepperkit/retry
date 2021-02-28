@@ -3,17 +3,13 @@
 ![Build Status](https://github.com/aukhatov/retry/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aukhatov_retry&metric=alert_status)](https://sonarcloud.io/dashboard?id=aukhatov_retry)
 
-This is a simple and lightweight retry library for Java.
+This is a simple and lightweight retry library for Java. It helps you transparently retry failed operations.
 
-## Motivation
-I answer one of the most popular questions: **Why?!**
+### Predefined Functions
 
-The short answer is - I'm a programmer and I can! :computer:
-
-To be serious I had to solve an issue on my work project. Where some actions must be retried if an error occurred according to specific responses.
-First, to solve this issue I looked up open-source libraries that may help me. I found two popular libs: resilience4j, Failsafe.
-But they do more than retry and I must prove that these libraries are reliable, safe, etc.
-Instead of proving that I decided to implement my own library to retry an operation :blush:
+- Exponential
+- Fixed
+- Randomized
 
 ## Code Examples
 
