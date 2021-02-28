@@ -1,4 +1,4 @@
-package art.aukhatov.retry;
+package io.github.pepperkit.retry;
 
 public interface RunnableRetry {
 

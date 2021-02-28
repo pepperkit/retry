@@ -1,4 +1,4 @@
-package art.aukhatov.retry;
+package io.github.pepperkit.retry;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
-import static art.aukhatov.retry.Retry.retry;
+import static io.github.pepperkit.retry.Retry.retry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RetryTest {
@@ -17,7 +17,7 @@ class RetryTest {
     void fixedRetry() {
 
         AtomicInteger counter = new AtomicInteger();
-        retry(3)
+        Retry.retry(3)
                 .backoff(new BackoffFunction.Fixed())
                 .delay(Duration.ofSeconds(2))
                 .handle(IllegalArgumentException.class)
@@ -36,7 +36,7 @@ class RetryTest {
 
     @Test
     void exponentialWhenResultIsSuccess() {
-        Optional<String> result = retry(1)
+        Optional<String> result = Retry.retry(1)
                 .backoff(new BackoffFunction.Exponential(3))
                 .delay(Duration.ofSeconds(2))
                 .call(() -> "RESULT");

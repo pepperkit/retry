@@ -19,7 +19,7 @@ The **exponential** backoff algorithm implementation.
 It uses to **gradually reduce the rate** of the operation if the exception _(or any)_ occurred.
 
 ```java
-import static art.aukhatov.retry.Retry.retry;
+import static io.github.pepperkit.retry.Retry.retry;
 
     retry(3)
         .backoff(new BackoffFunction.Exponential())
@@ -38,7 +38,7 @@ This is a **fixed** backoff algorithm implementation.
 There **each attempt of the operation** will be retried by **the same timeout** if the exception _(or any)_ occurred.
 
 ```java
-import static art.aukhatov.retry.Retry.retry;
+import static io.github.pepperkit.retry.Retry.retry;
 
     retry(3)
         .backoff(new BackoffFunction.Fixed())
@@ -55,7 +55,7 @@ import static art.aukhatov.retry.Retry.retry;
 This is a **randomized** backoff algorithm implementation.
 
 ```java
-import static art.aukhatov.retry.Retry.retry;
+import static io.github.pepperkit.retry.Retry.retry;
 
     retry(3)
         .backoff(new BackoffFunction.Randomized(5))
