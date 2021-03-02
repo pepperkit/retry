@@ -17,7 +17,7 @@ class RetryTest {
     void fixedRetry() {
 
         AtomicInteger counter = new AtomicInteger();
-        Retry.retry(3)
+        retry(3)
                 .backoff(new BackoffFunction.Fixed())
                 .delay(Duration.ofSeconds(2))
                 .handle(IllegalArgumentException.class)
@@ -36,7 +36,7 @@ class RetryTest {
 
     @Test
     void exponentialWhenResultIsSuccess() {
-        Optional<String> result = Retry.retry(1)
+        Optional<String> result = retry(1)
                 .backoff(new BackoffFunction.Exponential(3))
                 .delay(Duration.ofSeconds(2))
                 .call(() -> "RESULT");
