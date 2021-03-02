@@ -2,6 +2,7 @@ package io.github.pepperkit.retry;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
@@ -42,5 +43,29 @@ class RetryTest {
                 .call(() -> "RESULT");
 
         assertEquals(Optional.of("RESULT"), result);
+    }
+
+    @Test
+    @Timeout(6)
+    void multipleHandleExceptions() {
+        AtomicInteger counter = new AtomicInteger();
+
+        retry(3)
+                .backoff(new BackoffFunction.Fixed())
+                .delay(Duration.ofSeconds(2))
+                .handle(Set.of(IllegalArgumentException.class, IllegalStateException.class, IllegalCallerException.class))
+                .run(() -> {
+                    counter.incrementAndGet();
+                    if (counter.get() == 1)
+                        throw new IllegalArgumentException("Just to test");
+
+                    if (counter.get() == 2)
+                        throw new IllegalStateException("Just to test");
+
+                    if (counter.get() == 3)
+                        throw new IllegalCallerException("Just to test");
+                });
+
+        assertEquals(3, counter.get());
     }
 }

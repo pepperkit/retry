@@ -77,8 +77,17 @@ public final class Retry {
      * Specifies the failures to handle.
      * Any failures that are assignable from the {@code failures} will be handled.
      */
-    public Retry handle(Class<? extends Throwable>... failure) {
-        Collections.addAll(failureConditions, failure);
+    public Retry handle(Class<? extends Throwable> failure) {
+        failureConditions.add(failure);
+        return this;
+    }
+
+    /**
+     * Specifies the failures to handle.
+     * Any failures that are assignable from the {@code failures} will be handled.
+     */
+    public Retry handle(Set<Class<? extends Throwable>> failures) {
+        failureConditions.addAll(failures);
         return this;
     }
 
@@ -86,8 +95,17 @@ public final class Retry {
      * Specifies that retries have to be aborted.
      * Any failures that are assignable from the {@code failures} will be aborted.
      */
-    public Retry abortIf(Class<? extends Throwable>... failure) {
-        Collections.addAll(abortConditions, failure);
+    public Retry abortIf(Class<? extends Throwable> failure) {
+        abortConditions.add(failure);
+        return this;
+    }
+
+    /**
+     * Specifies that retries have to be aborted.
+     * Any failures that are assignable from the {@code failures} will be aborted.
+     */
+    public Retry abortIf(Set<Class<? extends Throwable>> failures) {
+        abortConditions.addAll(failures);
         return this;
     }
 
