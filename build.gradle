@@ -49,3 +49,10 @@ checkstyle {
     config project.resources.text
             .fromUri(new URI("https://raw.githubusercontent.com/aukhatov/checkstyle/master/checkstyle.xml"))
 }
+
+sourceCompatibility = 1.8
+targetCompatibility = 11
+
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+}
