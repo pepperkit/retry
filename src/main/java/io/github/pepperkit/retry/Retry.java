@@ -1,7 +1,6 @@
 package io.github.pepperkit.retry;
 
 import java.time.Duration;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
