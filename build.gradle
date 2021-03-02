@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'checkstyle'
     id 'org.sonarqube' version '3.1.1'
+    id 'jacoco'
 }
 
 group 'art.aukhatov.retry'
@@ -12,6 +13,17 @@ sonarqube {
         property "sonar.projectKey", "aukhatov_retry"
         property "sonar.organization", "aukhatov"
         property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco.xml"
+    }
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled false
+        xml.destination file("${buildDir}/reports/jacoco.xml")
     }
 }
 
@@ -26,6 +38,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 checkstyle {
