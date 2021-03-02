@@ -16,8 +16,8 @@ class RetryTest {
     @Test
     @Timeout(6)
     void fixedRetry() {
-
         AtomicInteger counter = new AtomicInteger();
+
         retry(3)
                 .backoff(new BackoffFunction.Fixed())
                 .delay(Duration.ofSeconds(2))
@@ -53,17 +53,21 @@ class RetryTest {
         retry(3)
                 .backoff(new BackoffFunction.Fixed())
                 .delay(Duration.ofSeconds(2))
-                .handle(Set.of(IllegalArgumentException.class, IllegalStateException.class, IllegalCallerException.class))
+                .handle(Set.of(IllegalArgumentException.class, IllegalStateException.class,
+                        IllegalCallerException.class))
                 .run(() -> {
                     counter.incrementAndGet();
-                    if (counter.get() == 1)
+                    if (counter.get() == 1) {
                         throw new IllegalArgumentException("Just to test");
+                    }
 
-                    if (counter.get() == 2)
+                    if (counter.get() == 2) {
                         throw new IllegalStateException("Just to test");
+                    }
 
-                    if (counter.get() == 3)
+                    if (counter.get() == 3) {
                         throw new IllegalCallerException("Just to test");
+                    }
                 });
 
         assertEquals(3, counter.get());
