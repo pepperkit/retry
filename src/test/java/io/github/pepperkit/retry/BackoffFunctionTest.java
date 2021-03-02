@@ -5,6 +5,7 @@ import java.time.Duration;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BackoffFunctionTest {
@@ -64,5 +65,15 @@ class BackoffFunctionTest {
 
         Duration delay3 = function.delay(3, initialDelay);
         assertTrue(delay3.toMillis() > 100L);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenExponentialFactorLessThanOne() {
+        assertThrows(IllegalArgumentException.class, () -> new BackoffFunction.Exponential(0));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenRandomizedFactorLessThanOne() {
+        assertThrows(IllegalArgumentException.class, () -> new BackoffFunction.Randomized(0));
     }
 }
