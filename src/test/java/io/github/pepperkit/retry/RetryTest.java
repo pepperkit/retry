@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Timeout;
 
 import static io.github.pepperkit.retry.Retry.retry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RetryTest {
 
@@ -131,5 +132,22 @@ class RetryTest {
                 .run(() -> {
                     throw new IllegalStateException("");
                 });
+    }
+
+    @Test
+    void onFailureWithCall() {
+        assertThrows(IllegalStateException.class, () ->
+                retry(3)
+                        .backoff(new BackoffFunction.Exponential(3))
+                        .delay(Duration.ofSeconds(2))
+                        .handle(IllegalStateException.class)
+                        .onFailure(ex -> {
+                            if (ex instanceof IllegalArgumentException) {
+                                throw new IllegalStateException("Got it!");
+                            }
+                        })
+                        .call(() -> {
+                            throw new IllegalArgumentException("On Failure");
+                        }));
     }
 }
