@@ -1,12 +1,12 @@
 package io.github.pepperkit.retry;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+
 import java.time.Duration;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
 
 import static io.github.pepperkit.retry.Retry.retry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -80,5 +80,24 @@ class RetryTest {
                 .run(() -> {
                     throw new IllegalStateException("Abort if");
                 });
+    }
+
+    @Test
+    void shouldAbortIfWithMultipleExceptions() {
+        AtomicInteger i = new AtomicInteger(0);
+        retry(5)
+                .backoff(new BackoffFunction.Fixed())
+                .abortIf(Set.of(IllegalStateException.class, IllegalCallerException.class))
+                .run(() -> {
+                    i.incrementAndGet();
+
+                    if (i.get() == 3) {
+                        throw new IllegalCallerException("Abort if");
+                    }
+
+                    throw new IllegalArgumentException("Just to retry");
+                });
+
+        assertEquals(3, i.get());
     }
 }
