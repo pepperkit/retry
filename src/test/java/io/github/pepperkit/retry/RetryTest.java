@@ -112,4 +112,14 @@ class RetryTest {
                     throw new IllegalStateException("");
                 });
     }
+
+    @Test
+    void shouldUseBackoffFunction() {
+        retry(2)
+                .delay(Duration.ofSeconds(2))
+                .maxDelay(Duration.ofSeconds(3))
+                .run(() -> {
+                    throw new IllegalStateException("");
+                });
+    }
 }
