@@ -122,4 +122,14 @@ class RetryTest {
                     throw new IllegalStateException("");
                 });
     }
+
+    @Test
+    void shouldSelectMinDelay() {
+        retry(2)
+                .delay(Duration.ofSeconds(2))
+                .maxDelay(Duration.ofSeconds(30))
+                .run(() -> {
+                    throw new IllegalStateException("");
+                });
+    }
 }
