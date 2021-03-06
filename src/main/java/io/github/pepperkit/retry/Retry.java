@@ -178,6 +178,10 @@ public final class Retry {
     }
 
     private Duration backoffDelay(int attempt) {
+        if (Objects.isNull(backoffFunc)) {
+            backoffFunc = new BackoffFunction.Fixed();
+        }
+
         Duration delayMillis = backoffFunc.delay(attempt, delay);
 
         if (Objects.nonNull(maxDelay) && maxDelay.toMillis() > 0) {
