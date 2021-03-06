@@ -100,4 +100,16 @@ class RetryTest {
 
         assertEquals(3, i.get());
     }
+
+    @Timeout(9)
+    @Test
+    void shouldBeLimitedByMaxRetryInterval() {
+        retry(3)
+                .backoff(new BackoffFunction.Exponential(5))
+                .delay(Duration.ofSeconds(2))
+                .maxDelay(Duration.ofSeconds(3))
+                .run(() -> {
+                    throw new IllegalStateException("");
+                });
+    }
 }
