@@ -72,4 +72,13 @@ class RetryTest {
 
         assertEquals(3, counter.get());
     }
+
+    @Test
+    void shouldAbortIfThrowsException() {
+        retry()
+                .abortIf(IllegalStateException.class)
+                .run(() -> {
+                    throw new IllegalStateException("Abort if");
+                });
+    }
 }
