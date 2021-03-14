@@ -61,9 +61,10 @@ jar {
     manifest {
         def buildDate = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
         attributes(
+                'Project': project.name,
+                'Version': "${archiveVersion.get()}",
                 'Build-Time': buildDate,
-                'Implementation-Build': 'git rev-parse HEAD'.execute().text.trim(),
-                'Version': "${archiveVersion.get()}"
+                'Implementation-Build': 'git rev-parse HEAD'.execute().text.trim()
         )
     }
 }
