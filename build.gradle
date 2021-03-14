@@ -53,9 +53,6 @@ checkstyle {
             .fromUri(new URI("https://raw.githubusercontent.com/pepperkit/checkstyle/master/checkstyle.xml"))
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 11
-
 tasks.withType(Javadoc) {
     options.encoding = 'UTF-8'
 }
@@ -69,4 +66,9 @@ jar {
                 'Version': "${archiveVersion.get()}"
         )
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
