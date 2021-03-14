@@ -64,7 +64,8 @@ jar {
                 'Project': project.name,
                 'Version': "${archiveVersion.get()}",
                 'Build-Time': buildDate,
-                'Implementation-Build': 'git rev-parse HEAD'.execute().text.trim()
+                'Implementation-Build': 'git rev-parse HEAD'.execute().text.trim(),
+                'Created-By': 'Pepper Kit https://pepperkit.github.io/'
         )
     }
 }
