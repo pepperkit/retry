@@ -47,7 +47,7 @@ test {
 
 checkstyle {
     config project.resources.text
-            .fromUri(new URI("https://raw.githubusercontent.com/aukhatov/checkstyle/master/checkstyle.xml"))
+            .fromUri(new URI("https://raw.githubusercontent.com/pepperkit/checkstyle/master/checkstyle.xml"))
 }
 
 sourceCompatibility = 1.8
