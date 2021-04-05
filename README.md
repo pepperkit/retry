@@ -31,6 +31,15 @@ new BackoffFunction.Fixed();
 ```
 
 #### Randomized
+This function returns a random interval value. The algorithm doesn't declare how much the rate of an operation will be reduced. 
+```text
+12s -> 4s -> 3s -> 9s
+```
+```java
+import io.github.pepperkit.retry.BackoffFunction;
+
+new BackoffFunction.Randomized(5);
+```
 
 #### Custom
 You can implement your own version of backoff function by the `io.github.pepperkit.retry.BackoffFunction` interface.
