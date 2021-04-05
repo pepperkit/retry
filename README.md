@@ -55,7 +55,7 @@ public interface BackoffFunction {
 
 ### Methods Definition
 
-- `retry()` - initiate the retry function
+- `retry()` - initiates the retry function
 - `backoff(BackoffFunction function)` - a function to compute next delay interval
 - `delay(Duration duration)` - an initial delay interval
 - `maxDelay(Duration duration)` - the maximum delay interval value
