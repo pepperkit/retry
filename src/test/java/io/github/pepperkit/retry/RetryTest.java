@@ -150,4 +150,35 @@ class RetryTest {
                             throw new IllegalArgumentException("On Failure");
                         }));
     }
+
+    @Test
+    void shouldAbortIfCallThrowsIllegalException() {
+        AtomicInteger counter = new AtomicInteger(0);
+        retry(2)
+                .backoff(new BackoffFunction.Fixed())
+                .delay(Duration.ofMillis(500L))
+                .abortIf(IllegalStateException.class)
+                .call(() -> {
+                    counter.incrementAndGet();
+                    throw new IllegalStateException("Just to test");
+                });
+
+        assertEquals(1, counter.get());
+    }
+
+    @Test
+    void shouldAcceptFailureThreeTimesForCall() {
+        AtomicInteger counter = new AtomicInteger(0);
+        retry()
+                .onFailure(ex -> {
+                    if (ex instanceof IllegalArgumentException) {
+                        counter.incrementAndGet();
+                    }
+                })
+                .call(() -> {
+                    throw new IllegalArgumentException("Just to test");
+                });
+
+        assertEquals(3, counter.get());
+    }
 }
