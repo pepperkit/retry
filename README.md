@@ -42,7 +42,14 @@ new BackoffFunction.Randomized(5);
 ```
 
 #### Custom
-You can implement your own version of backoff function by the `io.github.pepperkit.retry.BackoffFunction` interface.
+You can implement your own version of backoff function by the interface.
+```java
+@FunctionalInterface
+public interface BackoffFunction {
+
+    Duration delay(int attempt, Duration delay);
+}
+```
 
 ## Usage
 
