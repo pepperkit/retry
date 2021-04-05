@@ -5,11 +5,35 @@
 
 This is a simple and lightweight retry library for Java. It helps you transparently retry failed operations.
 
-### Predefined Functions
+### Backoff Functions
+The backoff function determines how much to wait between the retries.
 
-- Exponential
-- Fixed
-- Randomized
+#### Exponential
+It waits progressively longer intervals between subsequent retries.
+```text
+3s -> 9s -> 27s -> 81s
+```
+```java
+import io.github.pepperkit.retry.BackoffFunction;
+
+new BackoffFunction.Exponential(3);
+```
+
+#### Fixed
+This is an elementary implementation, just return a constant value.
+```text
+3s -> 3s -> 3s -> 3s
+```
+```java
+import io.github.pepperkit.retry.BackoffFunction;
+
+new BackoffFunction.Fixed();
+```
+
+#### Randomized
+
+#### Custom
+You can implement your own version of backoff function by the `io.github.pepperkit.retry.BackoffFunction` interface.
 
 ## Usage
 
