@@ -11,7 +11,19 @@ This is a simple and lightweight retry library for Java. It helps you transparen
 - Fixed
 - Randomized
 
-## Code Examples
+## Usage
+
+### Methods Definition
+
+- `retry()` - initiate the retry function
+- `backoff(BackoffFunction function)` - a function to compute next delay interval
+- `delay(Duration duration)` - an initial delay interval
+- `maxDelay(Duration duration)` - the maximum delay interval value
+- `handle(Class<? extends Throwable>)` - specifies a type of Exception which has to be handled to retry (if it doesn't specify any exception will be handled by default)
+- `abortIf(Class<? extends Throwable>)` - when the exception has occurred the retryable function will be interrupted
+- `onFailure(Consumer<? super Throwable>)` - specifies a function to handle the exception
+- `run()` - perform an action (function) which can be retried
+- `call()` - compute a result which can be retried
 
 ### Exponential Backoff
 
