@@ -6,6 +6,7 @@ plugins {
     id 'checkstyle'
     id 'org.sonarqube' version '3.1.1'
     id 'jacoco'
+    id 'maven-publish'
 }
 
 group 'io.github.pepperkit'
@@ -70,7 +71,74 @@ jar {
     }
 }
 
+task sourceJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier "javadoc"
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+publishing {
+    repositories {
+        maven {
+            url "https://s01.oss.sonatype.org/"
+            credentials {
+                username "$System.env.USERNAME"
+                password "$System.env.PASSWORD"
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'retry'
+                description = 'This is a simple and lightweight retry library for Java. It helps you transparently retry failed operations.'
+                url = 'https://pepperkit.github.io/'
+                groupId 'io.github.pepperkit'
+                artifactId 'retry'
+                version '1.0.0'
+
+                from components.java
+
+                artifact(sourceJar) {
+                    classifier = 'sources'
+                }
+                artifact(javadocJar) {
+                    classifier = 'javadoc'
+                }
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/pepperkit/retry/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'aaukhatov'
+                        name = 'Artur Aukhatov'
+                        email = 'aaukhatov@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com:pepperkit/retry.git'
+                    developerConnection = 'scm:git:ssh://example.com/my-library.git'
+                    url = 'https://github.com/pepperkit/retry'
+                }
+            }
+        }
+    }
 }
