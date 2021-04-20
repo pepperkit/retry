@@ -7,6 +7,7 @@ plugins {
     id 'org.sonarqube' version '3.1.1'
     id 'jacoco'
     id 'maven-publish'
+    id 'signing'
 }
 
 group 'io.github.pepperkit'
@@ -95,7 +96,7 @@ java {
 publishing {
     repositories {
         maven {
-            url "https://s01.oss.sonatype.org/"
+            url "https://s01.oss.sonatype.org/content/repositories/releases/"
             credentials {
                 username "$System.env.USERNAME"
                 password "$System.env.PASSWORD"
@@ -110,7 +111,7 @@ publishing {
                 url = 'https://pepperkit.github.io/'
                 groupId 'io.github.pepperkit'
                 artifactId 'retry'
-                version '1.0.0'
+                version "${archiveVersion.get()}"
 
                 from components.java
 
@@ -141,4 +142,11 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+    def signingKey = "$System.env.GPG_KEY"
+    def signingPassword = "$System.env.GPG_PASSWORD"
+    useInMemoryPgpKeys(signingKey, signingPassword)
 }
