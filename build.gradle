@@ -11,7 +11,7 @@ plugins {
 }
 
 group 'io.github.pepperkit'
-version '1.0.0'
+version '1.0.0-SNAPSHOT'
 
 sonarqube {
     properties {
@@ -96,7 +96,9 @@ java {
 publishing {
     repositories {
         maven {
-            url "https://s01.oss.sonatype.org/content/repositories/releases/"
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/content/repositories/releases/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
             credentials {
                 username "$System.env.USERNAME"
                 password "$System.env.PASSWORD"
@@ -109,9 +111,9 @@ publishing {
                 name = 'retry'
                 description = 'This is a simple and lightweight retry library for Java. It helps you transparently retry failed operations.'
                 url = 'https://pepperkit.github.io/'
-                groupId 'io.github.pepperkit'
-                artifactId 'retry'
-                version "${archiveVersion.get()}"
+                groupId group
+                artifactId project.name
+                version version
 
                 from components.java
 
