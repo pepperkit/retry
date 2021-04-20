@@ -108,7 +108,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             pom {
-                name = 'retry'
+                name = project.name
                 description = 'This is a simple and lightweight retry library for Java. It helps you transparently retry failed operations.'
                 url = 'https://pepperkit.github.io/'
                 groupId group
