@@ -136,7 +136,7 @@ publishing {
                 }
                 scm {
                     connection = 'scm:git:git://github.com:pepperkit/retry.git'
-                    developerConnection = 'scm:git:ssh://example.com/my-library.git'
+                    developerConnection = 'scm:git:ssh://github.com:pepperkit/retry.git'
                     url = 'https://github.com/pepperkit/retry'
                 }
             }
