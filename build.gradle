@@ -107,22 +107,25 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
+            artifactId project.name
+            groupId group
+            version version
+
+            from components.java
+
+            artifact(sourceJar) {
+                classifier = 'sources'
+            }
+            artifact(javadocJar) {
+                classifier = 'javadoc'
+            }
+
             pom {
                 name = project.name
                 description = 'This is a simple and lightweight retry library for Java. It helps you transparently retry failed operations.'
                 url = 'https://pepperkit.github.io/'
-                groupId group
-                artifactId project.name
-                version version
+                packaging 'jar'
 
-                from components.java
-
-                artifact(sourceJar) {
-                    classifier = 'sources'
-                }
-                artifact(javadocJar) {
-                    classifier = 'javadoc'
-                }
                 licenses {
                     license {
                         name = 'MIT License'
