@@ -1,12 +1,12 @@
 package io.github.pepperkit.retry;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
-
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import static io.github.pepperkit.retry.Retry.retry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
