@@ -6,10 +6,12 @@ plugins {
     id 'checkstyle'
     id 'org.sonarqube' version '3.1.1'
     id 'jacoco'
+    id 'maven-publish'
+    id 'signing'
 }
 
 group 'io.github.pepperkit'
-version '1.0.0'
+version '1.0.0-SNAPSHOT'
 
 sonarqube {
     properties {
@@ -70,7 +72,86 @@ jar {
     }
 }
 
+task sourceJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier "javadoc"
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+publishing {
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/content/repositories/releases/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username "$System.env.USERNAME"
+                password "$System.env.PASSWORD"
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId project.name
+            groupId group
+            version version
+
+            from components.java
+
+            artifact(sourceJar) {
+                classifier = 'sources'
+            }
+            artifact(javadocJar) {
+                classifier = 'javadoc'
+            }
+
+            pom {
+                name = project.name
+                description = 'This is a simple and lightweight retry library for Java. It helps you transparently retry failed operations.'
+                url = 'https://pepperkit.github.io/'
+                packaging 'jar'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/pepperkit/retry/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'aaukhatov'
+                        name = 'Artur Aukhatov'
+                        email = 'aaukhatov@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com:pepperkit/retry.git'
+                    developerConnection = 'scm:git:ssh://github.com:pepperkit/retry.git'
+                    url = 'https://github.com/pepperkit/retry'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+    def signingKey = "$System.env.GPG_KEY"
+    def signingPassword = "$System.env.GPG_PASSWORD"
+    useInMemoryPgpKeys(signingKey, signingPassword)
 }

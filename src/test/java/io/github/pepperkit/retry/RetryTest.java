@@ -1,8 +1,8 @@
 package io.github.pepperkit.retry;
 
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
@@ -50,12 +50,13 @@ class RetryTest {
     @Timeout(6)
     void multipleHandleExceptions() {
         AtomicInteger counter = new AtomicInteger();
-
+        HashSet<Class<? extends Throwable>> exceptions = new HashSet<>();
+        exceptions.add(IllegalArgumentException.class);
+        exceptions.add(IllegalStateException.class);
         retry(3)
                 .backoff(new BackoffFunction.Fixed())
                 .delay(Duration.ofSeconds(2))
-                .handle(Set.of(IllegalArgumentException.class, IllegalStateException.class,
-                        IllegalCallerException.class))
+                .handle(exceptions)
                 .run(() -> {
                     counter.incrementAndGet();
                     if (counter.get() == 1) {
@@ -67,7 +68,7 @@ class RetryTest {
                     }
 
                     if (counter.get() == 3) {
-                        throw new IllegalCallerException("Just to test");
+                        throw new IllegalStateException("Just to test");
                     }
                 });
 
@@ -86,14 +87,16 @@ class RetryTest {
     @Test
     void shouldAbortIfWithMultipleExceptions() {
         AtomicInteger counter = new AtomicInteger(0);
+        HashSet<Class<? extends Throwable>> exceptions = new HashSet<>();
+        exceptions.add(IllegalStateException.class);
         retry(5)
                 .backoff(new BackoffFunction.Fixed())
-                .abortIf(Set.of(IllegalStateException.class, IllegalCallerException.class))
+                .abortIf(exceptions)
                 .run(() -> {
                     counter.incrementAndGet();
 
                     if (counter.get() == 3) {
-                        throw new IllegalCallerException("Abort if");
+                        throw new IllegalStateException("Abort if");
                     }
 
                     throw new IllegalArgumentException("Just to retry");
