@@ -1,6 +1,6 @@
 # retry
 
-![Build Status](https://github.com/aukhatov/retry/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=master)
+[![Build](https://github.com/pepperkit/retry/actions/workflows/gradle.yml/badge.svg)](https://github.com/pepperkit/retry/actions/workflows/gradle.yml)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aukhatov_retry&metric=coverage)](https://sonarcloud.io/dashboard?id=aukhatov_retry)
 
 This is a simple and lightweight retry library for Java. It helps you transparently retry failed operations.
