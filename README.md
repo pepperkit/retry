@@ -119,3 +119,8 @@ import static io.github.pepperkit.retry.Retry.retry;
             // it can throw the ConnectionException
         });
 ```
+
+
+## License
+
+The library is licensed  under the terms of the **[MIT License](https://github.com/pepperkit/retry/blob/master/LICENSE)**.
