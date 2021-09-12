@@ -11,7 +11,7 @@ plugins {
 }
 
 group 'io.github.pepperkit'
-version '1.0.0-SNAPSHOT'
+version '1.0.0'
 
 sonarqube {
     properties {
