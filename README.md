@@ -94,10 +94,12 @@ import static io.github.pepperkit.retry.Retry.retry;
         .backoff(new BackoffFunction.Exponential())
         .delay(Duration.ofMillis(500))
         .maxDelay(Duration.ofSeconds(3))
-        .handle(ConnectionException.class)
+        .handle(HttpServiceUnavailable.class)
         .run(()->{
-            // do someting retryable
-            // it can throw the ConnectionException
+            webClient.get("https://some.example.com/v1/resource");
+            // webClient.get() throws HttpServiceUnavailable exception
+            // e.g. try to get this resource 3 times when the HttpServiceUnavailable exception has occurred
+            // we have some assumption, this service can be available later...
         });
 ```
 
@@ -112,10 +114,11 @@ import static io.github.pepperkit.retry.Retry.retry;
     retry(3)
         .backoff(new BackoffFunction.Fixed())
         .delay(Duration.ofMillis(500))
-        .handle(ConnectionException.class)
+        .handle(HttpServiceUnavailable.class)
         .run(()->{
-            // do someting retryable
-            // it can throw the ConnectionException
+            webClient.get("https://some.example.com/v1/resource");
+            // e.g. try to get this resource 3 times when the HttpServiceUnavailable exception has occurred
+            // we have some assumption, this service can be available later...
         });
 ```
 
@@ -130,10 +133,11 @@ import static io.github.pepperkit.retry.Retry.retry;
         .backoff(new BackoffFunction.Randomized(5))
         .delay(Duration.ofMillis(500))
         .maxDelay(Duration.ofSeconds(3))
-        .handle(ConnectionException.class)
+        .handle(HttpServiceUnavailable.class)
         .run(()->{
-            // do someting retryable
-            // it can throw the ConnectionException
+            webClient.get("https://some.example.com/v1/resource");
+            // e.g. try to get this resource 3 times when the HttpServiceUnavailable exception has occurred
+            // we have some assumption, this service can be available later...
         });
 ```
 
