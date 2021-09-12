@@ -5,6 +5,23 @@
 
 This is a simple and lightweight retry library for Java. It helps you transparently retry failed operations.
 
+### Dependency
+
+#### Maven
+```xml
+<dependency>
+    <groupId>io.github.pepperkit</groupId>
+    <artifactId>retry</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+#### Gradle
+
+```groovy
+implementation 'io.github.pepperkit:retry:1.0.0'
+```
+
 ### Backoff Functions
 The backoff function determines how much to wait between the retries.
 
