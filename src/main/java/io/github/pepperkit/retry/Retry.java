@@ -49,6 +49,8 @@ public final class Retry {
 
     /**
      * Specifies the backoff function before call next attempt.
+     *
+     * @param backoffFunc the function
      */
     public Retry backoff(BackoffFunction backoffFunc) {
         this.backoffFunc = backoffFunc;
@@ -57,6 +59,8 @@ public final class Retry {
 
     /**
      * Specifies an initial timeout {@link Duration} that uses in {@link BackoffFunction} before call next attempt.
+     *
+     * @param delay value
      */
     public Retry delay(Duration delay) {
         this.delay = delay;
@@ -66,6 +70,8 @@ public final class Retry {
     /**
      * Specifies max timeout value.
      * If the value is set, a backoff function can't exceed it.
+     *
+     * @param maxDelay value
      */
     public Retry maxDelay(Duration maxDelay) {
         this.maxDelay = maxDelay;
@@ -75,6 +81,8 @@ public final class Retry {
     /**
      * Specifies the failures to handle.
      * Any failures that are assignable from the {@code failures} will be handled.
+     *
+     * @param failure an exception
      */
     public Retry handle(Class<? extends Throwable> failure) {
         failureConditions.add(failure);
@@ -84,6 +92,8 @@ public final class Retry {
     /**
      * Specifies the failures to handle.
      * Any failures that are assignable from the {@code failures} will be handled.
+     *
+     * @param failures collection of exceptions
      */
     public Retry handle(Set<Class<? extends Throwable>> failures) {
         failureConditions.addAll(failures);
@@ -93,6 +103,8 @@ public final class Retry {
     /**
      * Specifies that retries have to be aborted.
      * Any failures that are assignable from the {@code failures} will be aborted.
+     *
+     * @param failure an exception
      */
     public Retry abortIf(Class<? extends Throwable> failure) {
         abortConditions.add(failure);
@@ -102,6 +114,8 @@ public final class Retry {
     /**
      * Specifies that retries have to be aborted.
      * Any failures that are assignable from the {@code failures} will be aborted.
+     *
+     * @param failures collection of exceptions
      */
     public Retry abortIf(Set<Class<? extends Throwable>> failures) {
         abortConditions.addAll(failures);
