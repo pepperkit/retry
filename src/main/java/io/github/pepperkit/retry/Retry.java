@@ -32,6 +32,8 @@ public final class Retry {
 
     /**
      * Default fabric method with 3 attempts.
+     *
+     * @return this instance
      */
     public static Retry retry() {
         return new Retry(DEFAULT_MAX_ATTEMPTS);
@@ -51,6 +53,7 @@ public final class Retry {
      * Specifies the backoff function before call next attempt.
      *
      * @param backoffFunc the function
+     * @return this instance
      */
     public Retry backoff(BackoffFunction backoffFunc) {
         this.backoffFunc = backoffFunc;
@@ -61,6 +64,7 @@ public final class Retry {
      * Specifies an initial timeout {@link Duration} that uses in {@link BackoffFunction} before call next attempt.
      *
      * @param delay value
+     * @return this instance
      */
     public Retry delay(Duration delay) {
         this.delay = delay;
@@ -72,6 +76,7 @@ public final class Retry {
      * If the value is set, a backoff function can't exceed it.
      *
      * @param maxDelay value
+     * @return this instance
      */
     public Retry maxDelay(Duration maxDelay) {
         this.maxDelay = maxDelay;
@@ -83,6 +88,7 @@ public final class Retry {
      * Any failures that are assignable from the {@code failures} will be handled.
      *
      * @param failure an exception
+     * @return this instance
      */
     public Retry handle(Class<? extends Throwable> failure) {
         failureConditions.add(failure);
@@ -94,6 +100,7 @@ public final class Retry {
      * Any failures that are assignable from the {@code failures} will be handled.
      *
      * @param failures collection of exceptions
+     * @return this instance
      */
     public Retry handle(Set<Class<? extends Throwable>> failures) {
         failureConditions.addAll(failures);
@@ -105,6 +112,7 @@ public final class Retry {
      * Any failures that are assignable from the {@code failures} will be aborted.
      *
      * @param failure an exception
+     * @return this instance
      */
     public Retry abortIf(Class<? extends Throwable> failure) {
         abortConditions.add(failure);
@@ -116,6 +124,7 @@ public final class Retry {
      * Any failures that are assignable from the {@code failures} will be aborted.
      *
      * @param failures collection of exceptions
+     * @return this instance
      */
     public Retry abortIf(Set<Class<? extends Throwable>> failures) {
         abortConditions.addAll(failures);
@@ -126,6 +135,7 @@ public final class Retry {
      * Registers the handler to be called when an execution attempt fails.
      *
      * @param fn the handler
+     * @return this instance
      */
     public Retry onFailure(Consumer<? super Throwable> fn) {
         failureConsumers.add(fn);
