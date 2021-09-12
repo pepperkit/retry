@@ -36,10 +36,6 @@ jacocoTestReport {
     }
 }
 
-checkstyle {
-    project.ext.checkstyleVersion = '8.45'
-}
-
 repositories {
     mavenCentral()
 }
@@ -55,6 +51,7 @@ test {
 }
 
 checkstyle {
+    toolVersion '8.42'
     config project.resources.text
             .fromUri(new URI("https://raw.githubusercontent.com/pepperkit/checkstyle/master/checkstyle.xml"))
 }
