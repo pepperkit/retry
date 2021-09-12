@@ -53,7 +53,7 @@ test {
 checkstyle {
     toolVersion '8.42'
     config project.resources.text
-            .fromUri(new URI("https://raw.githubusercontent.com/pepperkit/checkstyle/master/checkstyle.xml"))
+            .fromUri(new URI("https://raw.githubusercontent.com/pepperkit/checkstyle/v1.0.0-8.45/checkstyle.xml"))
 }
 
 tasks.withType(Javadoc) {
