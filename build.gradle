@@ -36,6 +36,10 @@ jacocoTestReport {
     }
 }
 
+checkstyle {
+    project.ext.checkstyleVersion = '8.45'
+}
+
 repositories {
     mavenCentral()
 }
