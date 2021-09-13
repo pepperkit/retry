@@ -2,7 +2,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 plugins {
-    id 'java'
+    id 'java-library'
     id 'checkstyle'
     id 'org.sonarqube' version '3.1.1'
     id 'jacoco'
@@ -111,8 +111,7 @@ publishing {
             artifactId project.name
             groupId group
             version version
-
-            from components.java
+            artifact  "${buildDir}/libs/${project.name}-${version}.jar"
 
             artifact(sourceJar) {
                 classifier = 'sources'
