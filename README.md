@@ -37,7 +37,7 @@ new BackoffFunction.Exponential(3);
 ```
 
 #### Fixed
-This is an elementary implementation, just return a constant value.
+This is an elementary implementation, it just returns a constant value.
 ```text
 3s -> 3s -> 3s -> 3s
 ```

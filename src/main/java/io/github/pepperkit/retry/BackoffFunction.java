@@ -1,13 +1,25 @@
+/*
+ * Copyright (C) 2022 PepperKit
+ *
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
 package io.github.pepperkit.retry;
 
 import java.security.SecureRandom;
 import java.time.Duration;
 
+/**
+ * The backoff function determines how much to wait between the retries.
+ */
 @FunctionalInterface
 public interface BackoffFunction {
 
     Duration delay(int attempt, Duration delay);
 
+    /**
+     * An elementary implementation of a backoff function, just returns a constant value.
+     */
     class Fixed implements BackoffFunction {
 
         public Fixed() {
@@ -20,10 +32,14 @@ public interface BackoffFunction {
         }
     }
 
+    /**
+     * Exponential backoff function waits progressively longer intervals between subsequent retries.
+     */
     class Exponential implements BackoffFunction {
 
         private static final int DEFAULT_FACTOR = 3;
         private final int factor;
+
 
         public Exponential(int factor) {
             if (factor < 1) {
@@ -45,6 +61,9 @@ public interface BackoffFunction {
         }
     }
 
+    /**
+     * Randomized backoff algorithm implementation, each interval value is determined randomly.
+     */
     class Randomized implements BackoffFunction {
 
         private final int bound;

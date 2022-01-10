@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2022 PepperKit
+ *
+ * This software may be modified and distributed under the terms
+ * of the MIT license. See the LICENSE file for details.
+ */
 package io.github.pepperkit.retry;
 
 import java.time.Duration;
@@ -8,6 +14,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+/**
+ * A static interface for the Retry library.
+ */
 public final class Retry {
 
     private static final int DEFAULT_MAX_ATTEMPTS = 3;
