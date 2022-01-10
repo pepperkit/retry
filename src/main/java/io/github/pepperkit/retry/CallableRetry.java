@@ -6,6 +6,10 @@
  */
 package io.github.pepperkit.retry;
 
+/**
+ * Callable version of a retry action.
+ * @param <V> the type of returned value
+ */
 public interface CallableRetry<V> {
 
     /**

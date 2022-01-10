@@ -14,6 +14,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+/**
+ * A static interface for the Retry library.
+ */
 public final class Retry {
 
     private static final int DEFAULT_MAX_ATTEMPTS = 3;

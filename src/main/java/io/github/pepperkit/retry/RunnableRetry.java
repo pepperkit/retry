@@ -6,6 +6,9 @@
  */
 package io.github.pepperkit.retry;
 
+/**
+ * Runnable version of a retry action.
+ */
 public interface RunnableRetry {
 
     /**
